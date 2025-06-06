@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Price Comparator</title>
+    <style>
+        body { font-family: Arial; padding: 2em; }
+        input { padding: 0.5em; width: 300px; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .diff { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Buyee vs eBay Price Comparison</h1>
+    <form method="get">
+        <input type="text" name="q" placeholder="Search item (e.g., PS5)" required>
+        <button type="submit">Compare</button>
+    </form>
+
+    {% if comparison %}
+        <table>
+            <tr>
+                <th>eBay Item</th>
+                <th>eBay Price</th>
+                <th>Buyee Item</th>
+                <th>Buyee Price</th>
+                <th>Price Difference (£ - ¥)</th>
+            </tr>
+            {% for row in comparison %}
+                <tr>
+                    <td><a href="{{ row.ebay.url }}" target="_blank">{{ row.ebay.title }}</a></td>
+                    <td>{{ row.ebay.price }}</td>
+                    <td><a href="{{ row.buyee.url }}" target="_blank">{{ row.buyee.title }}</a></td>
+                    <td>{{ row.buyee.price }}</td>
+                    <td class="diff">{{ row.difference }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
